@@ -2,29 +2,491 @@
 <html lang="en">
 
 <head>
+    <title>Pet Challenge</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 </head>
-<title>Pet Challenge</title>
+<script src="https://kit.fontawesome.com/c6f2297398.js" crossorigin="anonymous"></script>
+<style>
+    body {
+        background: linear-gradient(#e4f8f8, #c2f7f7);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: rgb(8, 144, 144);
+        font-size: 45px;
+        padding-bottom: 3px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #089090;
+        border: 1px dashed #089090;
+        padding: 15px;
+        margin: 24px 30px;
+        font-size: 30px;
+        border-radius: 4px;
+    }
+
+    hr {
+        color: #089090;
+        display: block;
+        unicode-bidi: isolate;
+        margin-block-start: 0.5em;
+        margin-block-end: 0.5em;
+        margin-inline-start: 3%;
+        margin-inline-end: 3%;
+        overflow: hidden;
+        border-style: dashed;
+        border-width: 1px;
+        padding-top: 1px;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 20px;
+    }
+
+    p {
+
+        margin: 20 0 10px;
+        line-height: 2;
+        padding: 0% 2%;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    button {
+        background-color: #e4f8f8;
+        color: #272044;
+        display: inline;
+        margin: 0 auto;
+        border: 1px solid #089090;
+        border-radius: 30px;
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        transition: all 200ms ease;
+        box-shadow: #818e8e 0px 3px 3px 0px;
+    }
+
+    button:hover {
+        cursor: pointer;
+        background: white;
+        color: #089090;
+        border: 1px solid #089090;
+
+    }
+
+
+    .page {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+
+    .card-container {
+        width: 257px;
+        height: 257px;
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        background: black;
+        display: inline-block;
+        margin: 0 12px;
+        cursor: pointer;
+    }
+
+    .card-container img {
+        opacity: .8;
+        width: 100%;
+        height: 100%;
+        margin-bottom: 0;
+        object-fit: cover;
+        transition: all 500ms ease-in;
+    }
+
+    .card-container div {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        color: white;
+        transition: all 500ms ease-in;
+    }
+
+    .card-container .heading {
+        font-size: 15px;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .card-container .content {
+        margin-top: 0;
+        font-size: 12px;
+        line-height: 20px;
+        display: none;
+        margin-bottom: 0;
+    }
+
+    .card-container:hover div .content {
+        display: block;
+    }
+
+    .card-container:hover img {
+        border-radius: 24px;
+        opacity: .6;
+    }
+
+    .intro-imgs {
+        text-align: center;
+
+    }
+
+    .intro-imgs a {
+        text-decoration: none;
+    }
+
+
+    .buttons {
+        text-align: center;
+    }
+
+    .search {
+        color: black;
+    }
+
+    .Visit {
+        color: #272044;
+        text-decoration: none;
+
+    }
+
+    .topics {
+        color: #089090;
+        font-size: 14px;
+    }
+
+    .lonely-planet {
+        color: #089090;
+        font-size: 11px;
+        margin: 10px 0 0 0;
+        padding: 0;
+        text-align: right;
+        text-decoration: none;
+    }
+
+    .learn-more {
+        color: #089090;
+        font-size: 11px;
+        margin: 10px 0 0 0;
+        padding: 0;
+        text-align: right;
+        text-decoration: none;
+    }
+
+    .learn-more:hover {
+        text-decoration: underline;
+    }
+
+    .linkedin {
+        color: #089090;
+        margin: 10px 0 0 0;
+        text-decoration: none;
+    }
+
+    .linkedin:hover {
+        text-decoration: underline;
+
+    }
+
+    .current {
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+    }
+
+
+
+    .footer {
+        text-align: center;
+        font-size: 10px;
+
+
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    @media (min-width: 600px) {
+        .column {
+            width: 50%;
+        }
+    }
+</style>
 </head>
 
 <body>
-    <h1>
-        My Dogs
-    </h1>
+    <div class="page">
+        <h1>
+            The Happy Lives Of My Dogs
+        </h1>
+        <h2>
+            Spain's Third Largest City 🇪🇸
+        </h2>
 
-    <a href="https://github.com/Newadventure2022/Celias-Projects-for-SheCodes" target="_blank" class="Visit">Open-source
-        coded</a> by Cecelia
-    Corona-Doran
-    </small>
-    </div>
+        <p class="current">
+            The Current Time and Weather in Valencia is <span class="time" id="time">10</span> and
+            <span class="weather" id="weather">20</span>°c
+        </p>
+
+        <div class="intro-imgs">
+            <a href="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/044/125/original/Photo_of_Ninot_Cecelia_Corona-Doran.jpg?1661071894"
+                class="card-container" target="_blank">
+                <img alt="las-fallas"
+                    src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/044/125/original/Photo_of_Ninot_Cecelia_Corona-Doran.jpg?1661071894" />
+                <div>
+                    <p class="heading">Las Fallas Festival</p>
+                    <p class="content">The Fallas Festival is Valencia's most popular fiesta that is held from March 14
+                        to 19.</p>
+                </div>
+            </a>
+
+            <a href="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/044/126/original/Turia_Fountain.jpg?1661071905"
+                class="card-container" target="_blank">
+                <img alt="city-center"
+                    src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/044/126/original/Turia_Fountain.jpg?1661071905" />
+                <div>
+                    <p class="heading">The Turia Fountain</p>
+                    <p class="content">The Turia Fountain is located in the old town's Plaza de la Virgen:near the city
+                        center.
+                    </p>
+                </div>
+            </a>
+            <a href="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/044/124/original/Arts-Valencia-web.jpg?1661071853"
+                class="card-container" target="_blank">
+                <img alt="arts and sciences"
+                    src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/044/124/original/Arts-Valencia-web.jpg?1661071853" />
+                <div>
+                    <p class="heading">Arts and Sciences </p>
+                    <p class="content">The City of Arts and Sciences has become one of Valencia's most popular tourist
+                        sites.</p>
+                </div>
+            </a>
+        </div>
+        <hr>
+        <p>
+            <strong>
+                <span class="topics">About Valencia:</span>
+            </strong>
+            <br />
+            Spain’s third-largest city is a magnificent place, content for Madrid and
+            Barcelona to grab the headlines
+            while it gets
+            on with being a wonderfully liveable city with thriving cultural, eating and nightlife scenes. Never
+            afraid
+            to innovate,
+            Valencia diverted its flood-prone river to the outskirts and converted the former riverbed into a
+            glorious
+            green ribbon
+            of park winding right through the city. On it are the strikingly futuristic buildings of the Ciudad de
+            las
+            Artes y las
+            Ciencias, designed by local boy Santiago Calatrava. Other brilliant contemporary buildings grace the
+            city,
+            which also
+            has a fistful of fabulous Modernista buildings, great museums, a long stretch of beach and a large,
+            characterful old
+            quarter. Valencia, surrounded by its huerta, a fertile zone of market gardens, is famous as the home of
+            rice
+            dishes such
+            as paella, but its buzzy dining scene offers plenty more besides; it's a superb spot for eating.
+            <strong>
+                <a href="https://www.lonelyplanet.com/spain/valencia-and-murcia/valencia#:~:text=Madrid%20and%20Barcelona-,to,-grab%20the%20headlines"
+                    target="_blank" class="lonely-planet">
+                    Read More <span class="search">Lonely Planet</span>
+                </a>
+            </strong>
+        </p>
+
+
+        <p>
+            <strong>
+                <span class="topics">Quick facts:</span>
+            </strong>
+            <br />
+
+            The port city of Valencia lies on Spain’s southeastern coast, where the Turia River meets the
+            Mediterranean
+            Sea.
+            It’s
+            known for its City of Arts and Sciences, with futuristic structures including a planetarium, an
+            oceanarium
+            and
+            an
+            interactive museum. Valencia also has several beaches, including some within nearby Albufera Park, a
+            wetlands
+            reserve
+            with a lake and walking trails.
+            </span>
+            <strong>
+                <a href="https://www.google.com/maps/place/Valencia/@39.4077852,-0.3615113,12z/data=!3m1!4b1!4m5!3m4!1s0xd604f4cf0efb06f:0xb4a351011f7f1d39!8m2!3d39.4699075!4d-0.3762881"
+                    target="_blank" class="learn-more">
+                    Learn more on <span class="search">Google</span>
+                </a>
+
+        </p>
+
+        <br>
+        <br>
+        <br />
+        <div class="buttons">
+            <button class="plan-button">
+                Planning A Visit?
+            </button>
+            <button class="fun">
+                <a href="https://www.visitvalencia.com/" target="_blank" class="Visit"> More Information</a>
+            </button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br />
+        <p class="footer">
+            <strong>
+                <em>
+                    This page was built by:
+                    <a href="https://www.linkedin.com/in/cecelia-c-975193ab/" target="_blank" class="linkedin">
+                        Cecelia Corona-Doran
+                    </a>
+                </em>
+            </strong>
+        </p>
+        <a href="https://github.com/Newadventure2022/Celias-Projects-for-SheCodes" target="_blank"
+            class="Visit">Open-source
+            coded</a> by Cecelia
+        Corona-Doran
 
     </div>
-    <script src="src/app.js"></script>
+    <script>
+        function plan() {
+            let name = prompt("What is your name?");
+            let travel = prompt("Do you like to travel?");
+
+            let inquire = prompt("Are you coming to Valencia, Spain?");
+
+            inquire = inquire.toLocaleLowerCase();
+            inquire = inquire.trim();
+
+            let h2 = document.querySelector("h2");
+
+            if (inquire === "yes")
+                h2.innerHTML = "🇪🇸 " + "We look forward to seeing you in Valencia!";
+
+            if (inquire === "no")
+                h2.innerHTML = "Maybe someday! " + "🤗"
+
+        }
+
+        let planButton = document.querySelector(".plan-button");
+
+        planButton.addEventListener("click", plan);
+
+
+        function tourism() {
+            let sights = prompt("Are you ready to go?");
+
+            sights = sights.toLocaleLowerCase();
+            sights = sights.trim();
+
+            if (sights === "yes") {
+                alert("Let's go!")
+            } else {
+                alert("Let's go anyway!")
+            }
+        }
+        let fun = document.querySelector(".fun");
+
+        fun.addEventListener("click", tourism);
+
+        let now = new Date();
+
+        let time = document.querySelector("#time");
+        let date = now.getDate();
+        let hours = now.getHours();
+        if (hours < 10) {
+            hours = `0${hours}`;
+        }
+
+        let minutes = now.getMinutes();
+        if (minutes < 10) {
+            minutes = `0${minutes}`;
+        }
+        let seconds = now.getSeconds();
+        let milliseconds = now.getMilliseconds();
+        let year = now.getFullYear();
+
+        let days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+        ];
+        let day = days[now.getDay()];
+        let months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        let month = months[now.getMonth()];
+        time.innerHTML = `${hours}:${minutes}`;
+
+        function showTemperature(response) {
+            let temperature = Math.round(response.data.main.temp);
+            let city = response.data.name;
+            let message = `${temperature}`;
+            let weather = document.querySelector("#weather");
+            weather.innerHTML = message;
+        }
+
+        let apiKey = "bb46c05d46c0caa623676d4d5ff608cb";
+        let units = "metric";
+        let city = "valencia";
+        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+
+        axios.get(apiUrl).then(showTemperature);
+
+
+
+
+
+    </script>
+
 </body>
 
 </html>
