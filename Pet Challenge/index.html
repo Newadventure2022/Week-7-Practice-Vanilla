@@ -212,14 +212,6 @@
 
     }
 
-    .current {
-        font-weight: bold;
-        font-size: 14px;
-        text-align: center;
-    }
-
-
-
     .footer {
         text-align: center;
         font-size: 10px;
@@ -245,13 +237,9 @@
             The Happy Lives Of My Dogs
         </h1>
         <h2>
-            Spain's Third Largest City 🇪🇸
+            Knuckles & Peppy
         </h2>
 
-        <p class="current">
-            The Current Time and Weather in Valencia is <span class="time" id="time">10</span> and
-            <span class="weather" id="weather">20</span>°c
-        </p>
 
         <div class="intro-imgs">
             <a href="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/056/030/original/Knuckles_Puppy_2.jpg?1669991393"
@@ -422,64 +410,6 @@
 
         fun.addEventListener("click", tourism);
 
-        let now = new Date();
-
-        let time = document.querySelector("#time");
-        let date = now.getDate();
-        let hours = now.getHours();
-        if (hours < 10) {
-            hours = `0${hours}`;
-        }
-
-        let minutes = now.getMinutes();
-        if (minutes < 10) {
-            minutes = `0${minutes}`;
-        }
-        let seconds = now.getSeconds();
-        let milliseconds = now.getMilliseconds();
-        let year = now.getFullYear();
-
-        let days = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-        ];
-        let day = days[now.getDay()];
-        let months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ];
-        let month = months[now.getMonth()];
-        time.innerHTML = `${hours}:${minutes}`;
-
-        function showTemperature(response) {
-            let temperature = Math.round(response.data.main.temp);
-            let city = response.data.name;
-            let message = `${temperature}`;
-            let weather = document.querySelector("#weather");
-            weather.innerHTML = message;
-        }
-
-        let apiKey = "bb46c05d46c0caa623676d4d5ff608cb";
-        let units = "metric";
-        let city = "valencia";
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-
-        axios.get(apiUrl).then(showTemperature);
 
 
 
